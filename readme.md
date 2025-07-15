@@ -36,3 +36,16 @@ npm install -g commitizen
 git add .
 git cz
 ```
+
+## Oh My Zsh
+
+### Install
+
+```bash
+# Install Zsh
+sudo apt install zsh
+# Install Oh My Zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+# Change default shell to Zsh
+chsh -s $(which zsh)
+```
