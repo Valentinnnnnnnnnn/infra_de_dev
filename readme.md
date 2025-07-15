@@ -37,6 +37,18 @@ git add .
 git cz
 ```
 
+### Sign commits
+
+setup :
+
+```bash
+git config --global gpg.format ssh
+git config --global user.signingkey ~/.ssh/id_ed25519.pub
+git config --global commit.gpgsign true
+```
+
+> Add the ssh key to GitHub account as a signing key.
+
 ## Oh My Zsh
 
 ### Install
