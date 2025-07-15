@@ -1,23 +1,23 @@
-import type { GameResponse, GuessResponse } from '../types/game';
+import type { GameResponse, GuessResponse } from '../types/game'
 
 class ApiService {
-  private baseUrl: string;
+  private baseUrl: string
 
   constructor(baseUrl: string = '/api') {
-    this.baseUrl = baseUrl;
+    this.baseUrl = baseUrl
   }
 
   async startNewGame(): Promise<GameResponse> {
     const response = await fetch(`${this.baseUrl}/game/new`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-    });
+    })
 
     if (!response.ok) {
-      throw new Error('Erreur lors de la création du jeu');
+      throw new Error('Erreur lors de la création du jeu')
     }
 
-    return response.json();
+    return response.json()
   }
 
   async submitGuess(gameId: string, guess: string): Promise<GuessResponse> {
@@ -25,24 +25,24 @@ class ApiService {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ guess }),
-    });
+    })
 
     if (!response.ok) {
-      throw new Error('Erreur lors de la soumission de la proposition');
+      throw new Error('Erreur lors de la soumission de la proposition')
     }
 
-    return response.json();
+    return response.json()
   }
 
   async getGameState(gameId: string): Promise<GameResponse> {
-    const response = await fetch(`${this.baseUrl}/game/${gameId}`);
+    const response = await fetch(`${this.baseUrl}/game/${gameId}`)
 
     if (!response.ok) {
-      throw new Error('Erreur lors de la récupération du jeu');
+      throw new Error('Erreur lors de la récupération du jeu')
     }
 
-    return response.json();
+    return response.json()
   }
 }
 
-export const apiService = new ApiService();
+export const apiService = new ApiService()

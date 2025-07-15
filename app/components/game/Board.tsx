@@ -1,8 +1,8 @@
-import { Row } from './Row';
-import type { GameState } from '../../types/game';
+import { Row } from './Row'
+import type { GameState } from '../../types/game'
 
 interface BoardProps {
-  gameState: GameState;
+  gameState: GameState
 }
 
 export const Board = ({ gameState }: BoardProps) => {
@@ -14,13 +14,15 @@ export const Board = ({ gameState }: BoardProps) => {
           row={row}
           isCurrentRow={rowIndex === gameState.currentRow}
           guessResult={
-            rowIndex < gameState.guesses.length 
-              ? gameState.guesses[rowIndex].split('') 
+            rowIndex < gameState.guesses.length
+              ? gameState.guesses[rowIndex].split('')
               : undefined
           }
-          isAnimating={gameState.isAnimating && rowIndex === gameState.currentRow}
+          isAnimating={
+            gameState.isAnimating && rowIndex === gameState.currentRow
+          }
         />
       ))}
     </div>
-  );
-};
+  )
+}

@@ -1,13 +1,13 @@
-import { useState, useCallback, useEffect } from 'react';
-import type { GameState, LetterStatus } from '../types/game';
-import { useApi } from './useApi';
-import { 
-  createEmptyBoard, 
-  isValidWord, 
-  updateKeyboardStatus, 
-  WORD_LENGTH, 
-  MAX_GUESSES 
-} from '../utils/gameHelpers';
+import { useState, useCallback, useEffect } from 'react'
+import type { GameState, LetterStatus } from '../types/game'
+import { useApi } from './useApi'
+import {
+  createEmptyBoard,
+  isValidWord,
+  updateKeyboardStatus,
+  WORD_LENGTH,
+  MAX_GUESSES,
+} from '../utils/gameHelpers'
 
 export const useGame = () => {
   const [gameState, setGameState] = useState<GameState>({
@@ -20,75 +20,86 @@ export const useGame = () => {
     keyboardStatus: {},
     isAnimating: false,
     error: null,
-  });
+  })
 
-  const [gameId, setGameId] = useState<string>('');
-  const { startNewGame, submitGuess, loading, error } = useApi();
+  const [gameId, setGameId] = useState<string>('')
+  const { startNewGame, submitGuess, loading, error } = useApi()
 
   const initializeGame = useCallback(async () => {
-    const gameData = await startNewGame();
+    const gameData = await startNewGame()
     if (gameData) {
-      setGameId(gameData.gameId);
-      setGameState(prev => ({
+      setGameId(gameData.gameId)
+      setGameState((prev) => ({
         ...prev,
         targetWord: gameData.targetWord,
         gameStatus: 'playing',
         error: null,
-      }));
+      }))
     }
-  }, [startNewGame]);
+  }, [startNewGame])
 
-  const addLetter = useCallback((letter: string) => {
-    if (gameState.currentCol >= WORD_LENGTH || gameState.gameStatus !== 'playing') return;
+  const addLetter = useCallback(
+    (letter: string) => {
+      if (
+        gameState.currentCol >= WORD_LENGTH ||
+        gameState.gameStatus !== 'playing'
+      )
+        return
 
-    setGameState(prev => {
-      const newBoard = prev.board.map(row => [...row]);
-      newBoard[prev.currentRow][prev.currentCol] = letter;
-      
-      return {
-        ...prev,
-        board: newBoard,
-        currentCol: prev.currentCol + 1,
-      };
-    });
-  }, [gameState.currentCol, gameState.gameStatus]);
+      setGameState((prev) => {
+        const newBoard = prev.board.map((row) => [...row])
+        newBoard[prev.currentRow][prev.currentCol] = letter
+
+        return {
+          ...prev,
+          board: newBoard,
+          currentCol: prev.currentCol + 1,
+        }
+      })
+    },
+    [gameState.currentCol, gameState.gameStatus]
+  )
 
   const removeLetter = useCallback(() => {
-    if (gameState.currentCol <= 0 || gameState.gameStatus !== 'playing') return;
+    if (gameState.currentCol <= 0 || gameState.gameStatus !== 'playing') return
 
-    setGameState(prev => {
-      const newBoard = prev.board.map(row => [...row]);
-      newBoard[prev.currentRow][prev.currentCol - 1] = '';
-      
+    setGameState((prev) => {
+      const newBoard = prev.board.map((row) => [...row])
+      newBoard[prev.currentRow][prev.currentCol - 1] = ''
+
       return {
         ...prev,
         board: newBoard,
         currentCol: prev.currentCol - 1,
-      };
-    });
-  }, [gameState.currentCol, gameState.gameStatus]);
+      }
+    })
+  }, [gameState.currentCol, gameState.gameStatus])
 
   const submitCurrentGuess = useCallback(async () => {
-    if (gameState.currentCol !== WORD_LENGTH || gameState.gameStatus !== 'playing') return;
+    if (
+      gameState.currentCol !== WORD_LENGTH ||
+      gameState.gameStatus !== 'playing'
+    )
+      return
 
-    const currentGuess = gameState.board[gameState.currentRow].join('');
-    
+    const currentGuess = gameState.board[gameState.currentRow].join('')
+
     if (!isValidWord(currentGuess)) {
-      setGameState(prev => ({ ...prev, error: 'Mot invalide' }));
-      return;
+      setGameState((prev) => ({ ...prev, error: 'Mot invalide' }))
+      return
     }
 
-    setGameState(prev => ({ ...prev, isAnimating: true }));
+    setGameState((prev) => ({ ...prev, isAnimating: true }))
 
-    const result = await submitGuess(gameId, currentGuess);
-    
+    const result = await submitGuess(gameId, currentGuess)
+
     if (result) {
-      setGameState(prev => {
+      setGameState((prev) => {
         const newKeyboardStatus = updateKeyboardStatus(
           prev.keyboardStatus,
           currentGuess,
           result.result
-        );
+        )
 
         return {
           ...prev,
@@ -99,22 +110,25 @@ export const useGame = () => {
           keyboardStatus: newKeyboardStatus,
           isAnimating: false,
           error: null,
-        };
-      });
+        }
+      })
     } else {
-      setGameState(prev => ({ ...prev, isAnimating: false }));
+      setGameState((prev) => ({ ...prev, isAnimating: false }))
     }
-  }, [gameState, gameId, submitGuess]);
+  }, [gameState, gameId, submitGuess])
 
-  const handleKeyPress = useCallback((key: string) => {
-    if (key === 'ENTER') {
-      submitCurrentGuess();
-    } else if (key === 'BACKSPACE') {
-      removeLetter();
-    } else if (/^[A-Z]$/.test(key)) {
-      addLetter(key);
-    }
-  }, [addLetter, removeLetter, submitCurrentGuess]);
+  const handleKeyPress = useCallback(
+    (key: string) => {
+      if (key === 'ENTER') {
+        submitCurrentGuess()
+      } else if (key === 'BACKSPACE') {
+        removeLetter()
+      } else if (/^[A-Z]$/.test(key)) {
+        addLetter(key)
+      }
+    },
+    [addLetter, removeLetter, submitCurrentGuess]
+  )
 
   const resetGame = useCallback(() => {
     setGameState({
@@ -127,24 +141,24 @@ export const useGame = () => {
       keyboardStatus: {},
       isAnimating: false,
       error: null,
-    });
-    initializeGame();
-  }, [initializeGame]);
+    })
+    initializeGame()
+  }, [initializeGame])
 
   useEffect(() => {
-    initializeGame();
-  }, [initializeGame]);
+    initializeGame()
+  }, [initializeGame])
 
   useEffect(() => {
     if (error) {
-      setGameState(prev => ({ ...prev, error }));
+      setGameState((prev) => ({ ...prev, error }))
     }
-  }, [error]);
+  }, [error])
 
   return {
     gameState,
     handleKeyPress,
     resetGame,
     loading,
-  };
-};
+  }
+}

@@ -1,6 +1,6 @@
-import { Key } from "./Key";
-import type { KeyboardProps } from "../../types/game";
-import { KEYBOARD_LAYOUT } from "../../utils/gameHelpers";
+import { Key } from './Key'
+import type { KeyboardProps } from '../../types/game'
+import { KEYBOARD_LAYOUT } from '../../utils/gameHelpers'
 
 export const Keyboard = ({
   onKeyPress,
@@ -15,7 +15,7 @@ export const Keyboard = ({
             <Key
               key={key}
               keyValue={key}
-              status={keyboardStatus[key] || "unused"}
+              status={keyboardStatus[key] || 'unused'}
               onClick={onKeyPress}
               disabled={disabled}
             />
@@ -23,5 +23,5 @@ export const Keyboard = ({
         </div>
       ))}
     </div>
-  );
-};
+  )
+}

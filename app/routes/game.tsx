@@ -1,27 +1,29 @@
-import type { LoaderFunction } from 'react-router';
-import { useGame } from '../hooks/useGame';
-import { useKeyboard } from '../hooks/useKeyboard';
-import { Board } from '../components/game/Board';
-import { Keyboard } from '../components/game/Keyboard';
-import { GameModal } from '../components/game/GameModal';
-import { LoadingSpinner } from '../components/common/LoadingSpinner';
-import { Button } from '../components/ui/Button';
+import type { LoaderFunction } from 'react-router'
+import { useGame } from '../hooks/useGame'
+import { useKeyboard } from '../hooks/useKeyboard'
+import { Board } from '../components/game/Board'
+import { Keyboard } from '../components/game/Keyboard'
+import { GameModal } from '../components/game/GameModal'
+import { LoadingSpinner } from '../components/common/LoadingSpinner'
+import { Button } from '../components/ui/Button'
 
 export const loader: LoaderFunction = async () => {
-  return { message: 'Jeu chargé' };
-};
+  return { message: 'Jeu chargé' }
+}
 
 export default function GameRoute() {
-  const { gameState, handleKeyPress, resetGame, loading } = useGame();
-  
-  useKeyboard(handleKeyPress, 
-    gameState.gameStatus !== 'playing' || gameState.isAnimating
-  );
+  const { gameState, handleKeyPress, resetGame, loading } = useGame()
 
-  const showModal = gameState.gameStatus === 'won' || gameState.gameStatus === 'lost';
+  useKeyboard(
+    handleKeyPress,
+    gameState.gameStatus !== 'playing' || gameState.isAnimating
+  )
+
+  const showModal =
+    gameState.gameStatus === 'won' || gameState.gameStatus === 'lost'
 
   if (loading || gameState.gameStatus === 'loading') {
-    return <LoadingSpinner />;
+    return <LoadingSpinner />
   }
 
   return (
@@ -31,9 +33,7 @@ export default function GameRoute() {
           <h1 className="text-4xl font-bold text-gray-900 mb-2">
             Jeu de Devinette
           </h1>
-          <p className="text-gray-600">
-            Trouvez le mot en 6 essais maximum
-          </p>
+          <p className="text-gray-600">Trouvez le mot en 6 essais maximum</p>
           <div className="mt-4">
             <Button onClick={resetGame} variant="secondary" size="sm">
               Nouvelle Partie
@@ -52,7 +52,9 @@ export default function GameRoute() {
           <Keyboard
             onKeyPress={handleKeyPress}
             keyboardStatus={gameState.keyboardStatus}
-            disabled={gameState.gameStatus !== 'playing' || gameState.isAnimating}
+            disabled={
+              gameState.gameStatus !== 'playing' || gameState.isAnimating
+            }
           />
         </main>
 
@@ -65,5 +67,5 @@ export default function GameRoute() {
         />
       </div>
     </div>
-  );
+  )
 }

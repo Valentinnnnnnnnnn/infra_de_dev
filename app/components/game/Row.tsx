@@ -1,11 +1,11 @@
-import { Cell } from "./Cell";
-import type { CellState } from "../../types/game";
+import { Cell } from './Cell'
+import type { CellState } from '../../types/game'
 
 interface RowProps {
-  row: string[];
-  isCurrentRow: boolean;
-  guessResult?: string[];
-  isAnimating?: boolean;
+  row: string[]
+  isCurrentRow: boolean
+  guessResult?: string[]
+  isAnimating?: boolean
 }
 
 export const Row = ({
@@ -16,9 +16,9 @@ export const Row = ({
 }: RowProps) => {
   const cells: CellState[] = row.map((letter, index) => ({
     letter,
-    status: guessResult ? (guessResult[index] as any) : "unused",
+    status: guessResult ? (guessResult[index] as any) : 'unused',
     isAnimating: isAnimating && !!letter,
-  }));
+  }))
 
   return (
     <div className="flex gap-2 mb-2">
@@ -32,5 +32,5 @@ export const Row = ({
         />
       ))}
     </div>
-  );
-};
+  )
+}

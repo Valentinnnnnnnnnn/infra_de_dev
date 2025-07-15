@@ -1,5 +1,5 @@
-import type { GameModalProps } from "../../types/game";
-import { Button } from "../ui/Button";
+import type { GameModalProps } from '../../types/game'
+import { Button } from '../ui/Button'
 
 export const GameModal = ({
   isOpen,
@@ -8,13 +8,13 @@ export const GameModal = ({
   onRestart,
   onClose,
 }: GameModalProps) => {
-  if (!isOpen) return null;
+  if (!isOpen) return null
 
-  const isWon = gameStatus === "won";
-  const title = isWon ? "Félicitations !" : "Dommage !";
+  const isWon = gameStatus === 'won'
+  const title = isWon ? 'Félicitations !' : 'Dommage !'
   const message = isWon
-    ? "Vous avez trouvé le mot !"
-    : `Le mot était : ${targetWord}`;
+    ? 'Vous avez trouvé le mot !'
+    : `Le mot était : ${targetWord}`
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -22,7 +22,7 @@ export const GameModal = ({
         <div className="text-center">
           <h2
             className={`text-2xl font-bold mb-4 ${
-              isWon ? "text-green-600" : "text-red-600"
+              isWon ? 'text-green-600' : 'text-red-600'
             }`}
           >
             {title}
@@ -39,5 +39,5 @@ export const GameModal = ({
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

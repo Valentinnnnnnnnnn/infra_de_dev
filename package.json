@@ -6,7 +6,8 @@
     "build": "react-router build",
     "dev": "react-router dev",
     "start": "react-router-serve ./build/server/index.js",
-    "typecheck": "react-router typegen && tsc"
+    "typecheck": "react-router typegen && tsc",
+    "prettier": "exec prettier . --write"
   },
   "dependencies": {
     "@react-router/node": "^7.5.3",
@@ -22,10 +23,16 @@
     "@types/node": "^20",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
+    "cz-conventional-changelog": "^3.3.0",
+    "prettier": "3.6.2",
     "tailwindcss": "^4.1.4",
     "typescript": "^5.8.3",
     "vite": "^6.3.3",
-    "vite-tsconfig-paths": "^5.1.4",
-    "cz-conventional-changelog": "^3.3.0"
+    "vite-tsconfig-paths": "^5.1.4"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
