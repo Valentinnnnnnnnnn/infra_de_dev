@@ -13,6 +13,8 @@ model Game {
   guesses      Guess[]
   maxGuesses   Int      @default(6)
   createdAt    DateTime @default(now())
+  finishedAt   DateTime?
+  playerName   String?
 }
 
 model Guess {
@@ -21,5 +23,11 @@ model Guess {
   gameId   String
   guess    String
   result Json // [{ letter: string, status: 'correct' | 'present' | 'absent' }]
+  createdAt DateTime @default(now())
+}
+
+model Word {
+  id        Int      @id @default(autoincrement())
+  word      String   @unique
   createdAt DateTime @default(now())
 }

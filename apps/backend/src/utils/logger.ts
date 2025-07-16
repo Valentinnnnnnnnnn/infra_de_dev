@@ -25,7 +25,7 @@ const logger = createLogger({
   ),
   transports: [
     dailyRotateTransport,
-    new transports.Console() // Also log to console
+    new transports.Console(), // Also log to console
   ],
 })
 

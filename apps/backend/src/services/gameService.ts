@@ -31,8 +31,19 @@ export async function chooseRandomTarget() {
 
 export async function startNewGame() {
   const target = await chooseRandomTarget()
-  logger  .debug(`Chosen target for new game: ${target}`)
+  logger.debug(`Chosen target for new game: ${target}`)
   const game = await gameRepo.createGame(target)
-  logger.debug(`Service - Game created with ID: ${game.id} and target: ${game.target}`)
+  logger.debug(
+    `Service - Game created with ID: ${game.id} and target: ${game.target}`
+  )
+  return game
+}
+
+export async function getGameById(gameId: string) {
+  const game = await gameRepo.getGameById(gameId)
+  if (!game) {
+    logger.warn(`Game with ID ${gameId} not found`)
+    throw new Error(`Game with ID ${gameId} not found`)
+  }
   return game
 }
