@@ -6,7 +6,6 @@ let prisma: PrismaClient<
   'query' | 'info' | 'warn' | 'error'
 > | null = null
 
-
 export function getDatabase() {
   if (!prisma) {
     prisma = new PrismaClient<

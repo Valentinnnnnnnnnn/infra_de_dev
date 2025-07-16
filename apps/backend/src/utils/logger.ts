@@ -2,7 +2,6 @@ import fs from 'fs'
 import DailyRotateFile from 'winston-daily-rotate-file'
 import { createLogger, format } from 'winston'
 
-
 const logFolder = process.env.LOG_FOLDER || '/var/log/find_the_word'
 if (!fs.existsSync(logFolder)) fs.mkdirSync(logFolder, { recursive: true })
 
