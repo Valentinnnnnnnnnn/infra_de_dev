@@ -1,6 +1,6 @@
 import fs from 'fs'
 import DailyRotateFile from 'winston-daily-rotate-file'
-import { createLogger, format } from 'winston'
+import { createLogger, format, transports } from 'winston'
 
 const logFolder = process.env.LOG_FOLDER || '/var/log/find_the_word'
 if (!fs.existsSync(logFolder)) fs.mkdirSync(logFolder, { recursive: true })
@@ -23,7 +23,10 @@ const logger = createLogger({
       ({ timestamp, level, message }) => `${timestamp} [${level}]: ${message}`
     )
   ),
-  transports: [dailyRotateTransport],
+  transports: [
+    dailyRotateTransport,
+    new transports.Console() // Also log to console
+  ],
 })
 
 export default logger

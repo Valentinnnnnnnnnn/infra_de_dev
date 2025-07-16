@@ -1,4 +1,5 @@
 import { GameRepoImpl } from '../database/repositories/gameRepoImpl'
+import logger from '../utils/logger'
 
 const gameRepo = new GameRepoImpl()
 
@@ -30,6 +31,8 @@ export async function chooseRandomTarget() {
 
 export async function startNewGame() {
   const target = await chooseRandomTarget()
+  logger  .debug(`Chosen target for new game: ${target}`)
   const game = await gameRepo.createGame(target)
+  logger.debug(`Service - Game created with ID: ${game.id} and target: ${game.target}`)
   return game
 }

@@ -31,5 +31,8 @@ test('startNewGame creates a game with a valid target', async () => {
   const game = await startNewGame()
   expect(game).toHaveProperty('id')
   expect(game).toHaveProperty('target')
+  expect(game).toHaveProperty('maxGuesses')
+
   expect(validTargets).toContain(game.target)
+  expect(game.maxGuesses).toBeGreaterThan(0)
 })
