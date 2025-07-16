@@ -7,7 +7,6 @@
     "dev": "react-router dev",
     "start": "react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc",
-    "prettier": "exec prettier . --write",
     "lint": "eslint . --ext .ts,.tsx --fix"
   },
   "dependencies": {
@@ -28,7 +27,6 @@
     "eslint": "^9.31.0",
     "eslint-plugin-react": "^7.37.5",
     "globals": "^16.3.0",
-    "prettier": "3.6.2",
     "tailwindcss": "^4.1.4",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.37.0",
