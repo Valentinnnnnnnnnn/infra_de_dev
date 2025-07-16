@@ -1,0 +1,18 @@
+{
+  "name": "infra-de-dev",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently \"pnpm --filter frontend dev\" \"pnpm --filter backend dev\""
+  },
+  "keywords": [],
+  "author": "Valentin <valgaillard46@gmail.com>",
+  "license": "ISC",
+  "packageManager": "pnpm@10.13.1",
+  "private": "true",
+  "devDependencies": {
+    "cz-conventional-changelog": "^3.3.0"
+  }
+}
