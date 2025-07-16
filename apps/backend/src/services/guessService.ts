@@ -1,8 +1,8 @@
 import { GuessRepoImpl } from '../database/repositories/guessRepoImpl'
-import { getGameById } from './gameService'
+import { getGameById, updateGameStatus } from './gameService'
 import logger from '../utils/logger'
 
-const gameRepo = new GuessRepoImpl()
+const guessRepo = new GuessRepoImpl()
 
 export async function calculateGuessResult(
   guess: string,
@@ -45,20 +45,26 @@ export async function newGuess(gameId: string, guess: string) {
   }
 
   const result = await calculateGuessResult(guess, game.target)
-  const newGuess = await gameRepo.createGuess(gameId, guess, result)
+  const newGuess = await guessRepo.createGuess(gameId, guess, result)
   logger.debug(`New guess created with ID: ${newGuess.id}`)
+
+  if (result.every((r) => r.status === 'correct')) {
+    logger.debug(`Game with ID ${gameId} finished successfully`)
+    await updateGameStatus(gameId)
+  }
+
   return newGuess
 }
 
 export async function getAllGuessesByGameId(gameId: string) {
   logger.debug(`Retrieving all guesses for game ID: ${gameId}`)
-    const game = await getGameById(gameId)
-    if (!game) {
-        logger.error(`Game with ID ${gameId} not found`)
-        throw new Error(`Game with ID ${gameId} not found`)
-        }
+  const game = await getGameById(gameId)
+  if (!game) {
+    logger.error(`Game with ID ${gameId} not found`)
+    throw new Error(`Game with ID ${gameId} not found`)
+  }
 
-  const guesses = await gameRepo.getAllGuessesByGameId(gameId)
+  const guesses = await guessRepo.getAllGuessesByGameId(gameId)
   if (guesses.length === 0) {
     logger.warn(`No guesses found for game ID: ${gameId}`)
   }

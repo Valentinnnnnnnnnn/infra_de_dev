@@ -47,3 +47,16 @@ export async function getGameById(gameId: string) {
   }
   return game
 }
+
+export async function updateGameStatus(gameId: string) {
+  const game = await getGameById(gameId)
+  if (!game) {
+    logger.warn(`Game with ID ${gameId} not found for status update`)
+    throw new Error(`Game with ID ${gameId} not found`)
+  }
+  const updatedGame = await gameRepo.updateGame(gameId, {
+    finishedAt: new Date(),
+  })
+  logger.debug(`Game with ID ${gameId} updated to status: ${status}`)
+  return updatedGame
+}
