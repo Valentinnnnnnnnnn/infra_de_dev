@@ -4,9 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "concurrently \"pnpm --filter frontend dev\" \"pnpm --filter backend dev\"",
-    "prettier": "exec prettier . --write"
+    "prettier": "exec prettier . --write",
+    "test": "concurrently \"pnpm --filter backend test\" \"pnpm --filter frontend test\"",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage",
+    "test:frontend": "vitest --filter frontend",
+    "test:backend": "vitest --filter backend"
   },
   "keywords": [],
   "author": "Valentin <valgaillard46@gmail.com>",
@@ -14,7 +18,9 @@
   "packageManager": "pnpm@10.13.1",
   "private": "true",
   "devDependencies": {
+    "@vitest/ui": "^3.2.4",
     "cz-conventional-changelog": "^3.3.0",
-    "prettier": "3.6.2"
+    "prettier": "3.6.2",
+    "vitest": "^3.2.4"
   }
 }
