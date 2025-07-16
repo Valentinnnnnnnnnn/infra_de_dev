@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
 import { AnyZodObject, ZodError } from 'zod'
-import logger from '../infrastructure/logger'
+import logger from './logger'
 
 /**
  * Middleware de validation Zod pour req.body, req.query et req.params.
