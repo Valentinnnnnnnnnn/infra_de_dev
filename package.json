@@ -5,12 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "concurrently \"pnpm --filter frontend dev\" \"pnpm --filter backend dev\"",
-    "prettier": "exec prettier . --write",
-    "test": "concurrently \"pnpm --filter backend test\" \"pnpm --filter frontend test\"",
-    "test:ui": "vitest --ui",
-    "test:coverage": "vitest --coverage",
-    "test:frontend": "vitest --filter frontend",
-    "test:backend": "vitest --filter backend"
+    "prettier": "exec prettier . --write"
   },
   "keywords": [],
   "author": "Valentin <valgaillard46@gmail.com>",
@@ -18,9 +13,13 @@
   "packageManager": "pnpm@10.13.1",
   "private": "true",
   "devDependencies": {
+    "@types/jest": "^30.0.0",
     "@vitest/ui": "^3.2.4",
     "cz-conventional-changelog": "^3.3.0",
     "prettier": "3.6.2",
     "vitest": "^3.2.4"
+  },
+  "dependencies": {
+    "concurrently": "^9.2.0"
   }
 }
