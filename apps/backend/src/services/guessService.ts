@@ -52,6 +52,12 @@ export async function newGuess(gameId: string, guess: string) {
 
 export async function getAllGuessesByGameId(gameId: string) {
   logger.debug(`Retrieving all guesses for game ID: ${gameId}`)
+    const game = await getGameById(gameId)
+    if (!game) {
+        logger.error(`Game with ID ${gameId} not found`)
+        throw new Error(`Game with ID ${gameId} not found`)
+        }
+
   const guesses = await gameRepo.getAllGuessesByGameId(gameId)
   if (guesses.length === 0) {
     logger.warn(`No guesses found for game ID: ${gameId}`)
