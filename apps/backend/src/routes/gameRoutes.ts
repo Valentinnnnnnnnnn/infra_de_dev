@@ -1,7 +1,8 @@
 import { Router } from 'express';
-import * as ctrl from '../controllers/gameController';
+import { newGame } from '../controllers/gameController';
 
 const router = Router();
-router.post('/new', ctrl.newGame);
+
+router.post('/new', newGame);
 
 export default router;

@@ -1,4 +1,4 @@
-import { getDatabase } from "..";
+import { getDatabase } from "../index";
 import { GameRepo } from "../interfaces/gameRepo";
 import { Game } from "@prisma/client";
 
