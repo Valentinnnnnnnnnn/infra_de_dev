@@ -1,19 +1,30 @@
-# Logs
-*.log
-# Dépendances
+# Node modules
 node_modules/
-# Variables d'environnement
-.env
-.env.local
-# Cache
-.cache/
-# Build
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Build output
 dist/
 build/
-# OS
+.cache/
+.vite/
+
+# TypeScript
+*.tsbuildinfo
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# OS generated files
 .DS_Store
-Thumbs.db
-EOF
-# React Router
-/.react-router/
-/build/
+
+# IDE settings
+.vscode/
+.idea/
