@@ -2,6 +2,7 @@ import express from 'express'
 import gameRoutes from './routes/gameRoutes'
 import { errorHandler } from './middlewares/errorHandler'
 import logger from './utils/logger'
+import guessRoutes from './routes/guessRoutes'
 
 const app = express()
 
@@ -19,7 +20,8 @@ app.get('/health', (req, res) => {
 })
 
 // Game routes
-app.use('/api/v1/', gameRoutes)
+app.use('/api/v1/game/', gameRoutes)
+app.use('/api/v1/guess/', guessRoutes)
 
 app.use(errorHandler)
 
