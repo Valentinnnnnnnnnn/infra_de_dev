@@ -38,6 +38,5 @@ export const useApi = () => {
     },
     []
   )
-
   return { startNewGame, submitGuess, loading, error }
 }

@@ -3,7 +3,7 @@ import type { GameResponse, GuessResponse } from '../types/game'
 class ApiService {
   private baseUrl: string
 
-  constructor(baseUrl: string = '/api') {
+  constructor(baseUrl: string = 'http://127.0.0.1:3009/api/v1') {
     this.baseUrl = baseUrl
   }
 
@@ -21,10 +21,9 @@ class ApiService {
   }
 
   async submitGuess(gameId: string, guess: string): Promise<GuessResponse> {
-    const response = await fetch(`${this.baseUrl}/game/${gameId}/guess`, {
+    const response = await fetch(`${this.baseUrl}/guess/?gameId=${gameId}&guess=${guess}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ guess }),
     })
 
     if (!response.ok) {
