@@ -7,17 +7,21 @@ const guessRepo = new GuessRepoImpl()
 export async function calculateGuessResult(
   guess: string,
   target: string
-): Promise<{ letter: string; status: 'correct' | 'present' | 'absent' }[]> {
-  const result = Array(guess.length).fill('absent')
-  for (let i = 0; i < guess.length; i++) {
-    if (guess[i] === target[i]) {
-      result[i] = { letter: guess[i], status: 'correct' }
-    } else if (target.includes(guess[i])) {
-      result[i] = { letter: guess[i], status: 'present' }
+): Promise<('correct' | 'present' | 'absent')[]> {
+  const guessUpper = guess.toUpperCase()
+  const targetUpper = target.toUpperCase()
+
+  const result = Array(guessUpper.length).fill('absent')
+  for (let i = 0; i < guessUpper.length; i++) {
+    if (guessUpper[i] === targetUpper[i]) {
+      result[i] = 'correct'
+    } else if (targetUpper.includes(guessUpper[i])) {
+      result[i] = 'present'
     } else {
-      result[i] = { letter: guess[i], status: 'absent' }
+      result[i] = 'absent'
     }
   }
+
   return result
 }
 
@@ -48,7 +52,7 @@ export async function newGuess(gameId: string, guess: string) {
   const newGuess = await guessRepo.createGuess(gameId, guess, result)
   logger.debug(`New guess created with ID: ${newGuess.id}`)
 
-  if (result.every((r) => r.status === 'correct')) {
+  if (result.every((status) => status === 'correct')) {
     logger.debug(`Game with ID ${gameId} finished successfully`)
     await updateGameStatus(gameId)
   }

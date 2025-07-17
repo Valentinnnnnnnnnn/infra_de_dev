@@ -21,20 +21,30 @@ export const createEmptyBoard = (length: number): string[][] => {
 export const updateKeyboardStatus = (
   currentStatus: { [key: string]: LetterStatus },
   guess: string,
-  result: LetterStatus[]
+  result: { letter: string; status: LetterStatus }[]
 ): { [key: string]: LetterStatus } => {
   const newStatus = { ...currentStatus }
 
   for (let i = 0; i < guess.length; i++) {
     const letter = guess[i]
-    const status = result[i]
+    const status = result.find((r) => r.letter === letter)
 
-    // Priorité: correct > present > absent
-    if (newStatus[letter] === 'correct') continue
-    if (newStatus[letter] === 'present' && status === 'absent') continue
-
-    newStatus[letter] = status
+    if (status) {
+      if (newStatus[letter] === 'correct') {
+        continue
+      } else if (
+        newStatus[letter] === 'present' &&
+        status.status === 'absent'
+      ) {
+        continue
+      }
+      newStatus[letter] = status.status
+    } else if (!newStatus[letter]) {
+      newStatus[letter] = 'absent'
+    }
   }
+
+  console.log('Updated keyboard status:', newStatus)
 
   return newStatus
 }

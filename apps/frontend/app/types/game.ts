@@ -5,6 +5,7 @@ export interface GameState {
   gameStatus: 'playing' | 'won' | 'lost' | 'loading'
   length: number
   guesses: string[]
+  guessResults: LetterStatus[][]
   keyboardStatus: { [key: string]: LetterStatus }
   isAnimating: boolean
   error: string | null

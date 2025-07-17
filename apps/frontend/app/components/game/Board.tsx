@@ -13,11 +13,7 @@ export const Board = ({ gameState }: BoardProps) => {
           key={rowIndex}
           row={row}
           isCurrentRow={rowIndex === gameState.currentRow}
-          guessResult={
-            rowIndex < gameState.guesses.length
-              ? gameState.guesses[rowIndex].split('')
-              : undefined
-          }
+          guessResult={gameState.guessResults[rowIndex]}
           isAnimating={
             gameState.isAnimating && rowIndex === gameState.currentRow
           }

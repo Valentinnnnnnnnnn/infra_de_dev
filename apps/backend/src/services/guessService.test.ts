@@ -9,13 +9,14 @@ test('calculateGuessResult should return correct results', async () => {
   const target = 'grape'
   const result = await calculateGuessResult(guess, target)
 
-  expect(result).toEqual([
-    { letter: 'a', status: 'present' },
-    { letter: 'p', status: 'present' },
-    { letter: 'p', status: 'present' },
-    { letter: 'l', status: 'absent' },
-    { letter: 'e', status: 'correct' },
-  ])
+  expect(result).toEqual(['present', 'present', 'present', 'absent', 'correct'])
+})
+
+test('calculateGuessResult should handle mix of upper and lower case letters', async () => {
+  const guess = 'ApPlE'
+  const target = 'grape'
+  const result = await calculateGuessResult(guess, target)
+  expect(result).toEqual(['present', 'present', 'present', 'absent', 'correct'])
 })
 
 test('newGuess should not create a new guess, gameId do not exist', async () => {

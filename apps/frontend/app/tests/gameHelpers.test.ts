@@ -46,12 +46,12 @@ describe('gameHelpers', () => {
     it('updates keyboard status based on guess and result', () => {
       const initialStatus: { [key: string]: LetterStatus } = {}
       const guess = 'HELLO'
-      const result: LetterStatus[] = [
-        'present',
-        'absent',
-        'correct',
-        'absent',
-        'present',
+      const result: { letter: string; status: LetterStatus }[] = [
+        { letter: 'H', status: 'present' },
+        { letter: 'E', status: 'absent' },
+        { letter: 'L', status: 'correct' },
+        { letter: 'L', status: 'present' },
+        { letter: 'O', status: 'present' },
       ]
 
       const updated = updateKeyboardStatus(initialStatus, guess, result)
@@ -59,12 +59,15 @@ describe('gameHelpers', () => {
       expect(updated['E']).toBe('absent')
       expect(updated['L']).toBe('correct')
       expect(updated['O']).toBe('present')
+      expect(Object.keys(updated).length).toBe(4)
     })
 
     it('does not downgrade a letter status from correct', () => {
       const initialStatus: { [key: string]: LetterStatus } = { A: 'correct' }
       const guess = 'A'
-      const result: LetterStatus[] = ['absent']
+      const result: { letter: string; status: LetterStatus }[] = [
+        { letter: 'A', status: 'correct' },
+      ]
       const updated = updateKeyboardStatus(initialStatus, guess, result)
       expect(updated['A']).toBe('correct')
     })
@@ -72,7 +75,9 @@ describe('gameHelpers', () => {
     it('does not downgrade a letter status from present to absent', () => {
       const initialStatus: { [key: string]: LetterStatus } = { B: 'present' }
       const guess = 'B'
-      const result: LetterStatus[] = ['absent']
+      const result: { letter: string; status: LetterStatus }[] = [
+        { letter: 'B', status: 'absent' },
+      ]
       const updated = updateKeyboardStatus(initialStatus, guess, result)
       expect(updated['B']).toBe('present')
     })
@@ -80,7 +85,9 @@ describe('gameHelpers', () => {
     it('updates a letter when no previous status exists', () => {
       const initialStatus: { [key: string]: LetterStatus } = {}
       const guess = 'C'
-      const result: LetterStatus[] = ['absent']
+      const result: { letter: string; status: LetterStatus }[] = [
+        { letter: 'C', status: 'absent' },
+      ]
       const updated = updateKeyboardStatus(initialStatus, guess, result)
       expect(updated['C']).toBe('absent')
     })

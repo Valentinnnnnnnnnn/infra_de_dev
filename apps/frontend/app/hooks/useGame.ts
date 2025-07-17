@@ -16,6 +16,7 @@ export const useGame = () => {
     length: 5,
     board: createEmptyBoard(5),
     guesses: [],
+    guessResults: [],
     keyboardStatus: {},
     isAnimating: false,
     error: null,
@@ -99,15 +100,29 @@ export const useGame = () => {
         const newKeyboardStatus = updateKeyboardStatus(
           prev.keyboardStatus,
           currentGuess,
-          result.result
+          result.result.map((status, index) => ({
+            letter: currentGuess[index],
+            status,
+          }))
         )
+
+        const allCorrect = result.result.every(
+          (status: LetterStatus) => status === 'correct'
+        )
+
+        const gameStatus = allCorrect
+          ? 'won'
+          : prev.currentRow + 1 >= MAX_GUESSES
+            ? 'lost'
+            : 'playing'
 
         return {
           ...prev,
           currentRow: prev.currentRow + 1,
           currentCol: 0,
-          gameStatus: result.gameStatus,
+          gameStatus: gameStatus,
           guesses: [...prev.guesses, currentGuess],
+          guessResults: [...prev.guessResults, result.result],
           keyboardStatus: newKeyboardStatus,
           isAnimating: false,
           error: null,
@@ -139,6 +154,7 @@ export const useGame = () => {
       length: prev.length,
       board: createEmptyBoard(prev.length),
       guesses: [],
+      guessResults: [],
       keyboardStatus: {},
       isAnimating: false,
       error: null,

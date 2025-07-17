@@ -1,10 +1,11 @@
 import { Cell } from './Cell'
 import type { CellState } from '../../types/game'
+import type { LetterStatus } from '../../types/game'
 
 interface RowProps {
   row: string[]
   isCurrentRow: boolean
-  guessResult?: string[]
+  guessResult?: LetterStatus[]
   isAnimating?: boolean
 }
 
@@ -16,7 +17,7 @@ export const Row = ({
 }: RowProps) => {
   const cells: CellState[] = row.map((letter, index) => ({
     letter,
-    status: guessResult ? (guessResult[index] as any) : 'unused',
+    status: guessResult ? guessResult[index] : 'unused',
     isAnimating: isAnimating && !!letter,
   }))
 
