@@ -38,5 +38,24 @@ export const useApi = () => {
     },
     []
   )
-  return { startNewGame, submitGuess, loading, error }
+
+  const getResolvedWord = useCallback(
+    async (gameId: string): Promise<string | null> => {
+      setLoading(true)
+      setError(null)
+
+      try {
+        const response = await apiService.getResolvedWord(gameId)
+        return response
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Une erreur est survenue')
+        return null
+      } finally {
+        setLoading(false)
+      }
+    },
+    []
+  )
+
+  return { startNewGame, submitGuess, getResolvedWord, loading, error }
 }

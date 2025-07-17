@@ -45,6 +45,17 @@ class ApiService {
 
     return response.json()
   }
+
+  async getResolvedWord(gameId: string): Promise<string> {
+    const response = await fetch(`${this.baseUrl}/game/${gameId}/resolved`)
+
+    if (!response.ok) {
+      throw new Error('Erreur lors de la récupération du mot résolu')
+    }
+
+    const data = await response.json()
+    return data.resolvedWord || ''
+  }
 }
 
 export const apiService = new ApiService()

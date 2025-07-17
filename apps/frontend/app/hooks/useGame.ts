@@ -23,7 +23,8 @@ export const useGame = () => {
   })
 
   const [gameId, setGameId] = useState<string>('')
-  const { startNewGame, submitGuess, loading, error } = useApi()
+  const { startNewGame, submitGuess, loading, error, getResolvedWord } =
+    useApi()
 
   const initializeGame = useCallback(async () => {
     const gameData = await startNewGame()
@@ -162,6 +163,13 @@ export const useGame = () => {
     initializeGame()
   }, [initializeGame])
 
+  const getResolved = useCallback(async () => {
+    if (gameState.gameStatus === 'lost') {
+      return await getResolvedWord(gameId)
+    }
+    return ''
+  }, [gameState])
+
   useEffect(() => {
     initializeGame()
   }, [initializeGame])
@@ -177,5 +185,6 @@ export const useGame = () => {
     handleKeyPress,
     resetGame,
     loading,
+    getResolved,
   }
 }

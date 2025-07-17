@@ -51,10 +51,19 @@ export async function newGuess(gameId: string, guess: string) {
   const result = await calculateGuessResult(guess, game.target)
   const newGuess = await guessRepo.createGuess(gameId, guess, result)
   logger.debug(`New guess created with ID: ${newGuess.id}`)
+  logger.debug(`Guess result for game ID ${gameId}: ${result.join(', ')}`)
 
-  if (result.every((status) => status === 'correct')) {
+  if (!result.includes('absent') && !result.includes('present')) {
     logger.debug(`Game with ID ${gameId} finished successfully`)
     await updateGameStatus(gameId)
+  }
+
+  const totalGuesses = await guessRepo.getAllGuessesByGameId(gameId)
+  
+  if ( totalGuesses.length >= game.maxGuesses) {
+    logger.debug(`Max guesses reached for game ID ${gameId}`)
+    await updateGameStatus(gameId)
+    logger.debug(`Game with ID ${gameId} is now finished due to max guesses`)
   }
 
   return newGuess

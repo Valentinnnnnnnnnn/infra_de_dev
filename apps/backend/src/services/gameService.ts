@@ -57,6 +57,6 @@ export async function updateGameStatus(gameId: string) {
   const updatedGame = await gameRepo.updateGame(gameId, {
     finishedAt: new Date(),
   })
-  logger.debug(`Game with ID ${gameId} updated to status: ${status}`)
+  logger.debug(`Game with ID ${gameId} updated to finished`)
   return updatedGame
 }

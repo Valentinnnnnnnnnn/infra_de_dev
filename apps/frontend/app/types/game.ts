@@ -39,7 +39,6 @@ export interface KeyboardProps {
 export interface GameModalProps {
   isOpen: boolean
   gameStatus: 'won' | 'lost'
-  length: number
+  resolvedWord: () => Promise<string | null>
   onRestart: () => void
-  onClose: () => void
 }

@@ -6,13 +6,13 @@ import { Keyboard } from '../components/game/Keyboard'
 import { GameModal } from '../components/game/GameModal'
 import { LoadingSpinner } from '../components/common/LoadingSpinner'
 import { Button } from '../components/ui/Button'
-
 export const loader: LoaderFunction = async () => {
   return { message: 'Jeu chargé' }
 }
 
 export default function GameRoute() {
-  const { gameState, handleKeyPress, resetGame, loading } = useGame()
+  const { gameState, handleKeyPress, resetGame, loading, getResolved } =
+    useGame()
 
   useKeyboard(
     handleKeyPress,
@@ -61,9 +61,8 @@ export default function GameRoute() {
         <GameModal
           isOpen={showModal}
           gameStatus={gameState.gameStatus as 'won' | 'lost'}
-          length={gameState.length}
           onRestart={resetGame}
-          onClose={() => {}}
+          resolvedWord={getResolved}
         />
       </div>
     </div>
