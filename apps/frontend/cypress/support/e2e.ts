@@ -17,6 +17,6 @@
 import './commands'
 
 beforeEach(() => {
-// Nettoyer localStorage avant chaque test
-cy.clearLocalStorage()
+  // Nettoyer localStorage avant chaque test
+  cy.clearLocalStorage()
 })

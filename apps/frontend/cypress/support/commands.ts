@@ -27,19 +27,22 @@
 //
 
 Cypress.Commands.add('waitForApp', () => {
-cy.contains('Find The Word').should('be.visible')
-cy.get('[data-testid="game-board"]', { timeout: 5000 })
+  cy.contains('Find The Word').should('be.visible')
+  cy.get('[data-testid="game-board"]', { timeout: 5000 })
     .should('be.visible')
     .and('not.be.empty')
-  cy.get('[data-testid="keyboard"]', { timeout: 5000 })
-    .should('be.visible')
+  cy.get('[data-testid="keyboard"]', { timeout: 5000 }).should('be.visible')
 })
 
 Cypress.Commands.add('typeKey', (key: string) => {
   const code =
-    key.length === 1 && /^[A-Za-z]$/.test(key)
-      ? `Key${key.toUpperCase()}`
-      : key
+    key.length === 1 && /^[A-Za-z]$/.test(key) ? `Key${key.toUpperCase()}` : key
 
-  return cy.get('body').trigger('keydown', { key, code, force: true }) as unknown as Cypress.Chainable<JQuery<HTMLElement>>
+  return cy
+    .get('body')
+    .trigger('keydown', {
+      key,
+      code,
+      force: true,
+    }) as unknown as Cypress.Chainable<JQuery<HTMLElement>>
 })

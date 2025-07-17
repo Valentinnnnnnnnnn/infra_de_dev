@@ -5,9 +5,11 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/index.js",
     "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
-    "test": "jest"
+    "test": "jest",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate:apply": "prisma migrate deploy",
+    "start": "node dist/index.js"
   },
   "keywords": [],
   "author": "Valentin <valgaillard46@gmail.com>",
