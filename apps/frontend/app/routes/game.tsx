@@ -31,7 +31,7 @@ export default function GameRoute() {
       <div className="max-w-2xl mx-auto px-4">
         <header className="text-center mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-2">
-            Jeu de Devinette
+            Find The Word
           </h1>
           <p className="text-gray-600">Trouvez le mot en 6 essais maximum</p>
           <div className="mt-4">
