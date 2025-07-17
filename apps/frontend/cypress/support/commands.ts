@@ -38,11 +38,9 @@ Cypress.Commands.add('typeKey', (key: string) => {
   const code =
     key.length === 1 && /^[A-Za-z]$/.test(key) ? `Key${key.toUpperCase()}` : key
 
-  return cy
-    .get('body')
-    .trigger('keydown', {
-      key,
-      code,
-      force: true,
-    }) as unknown as Cypress.Chainable<JQuery<HTMLElement>>
+  return cy.get('body').trigger('keydown', {
+    key,
+    code,
+    force: true,
+  }) as unknown as Cypress.Chainable<JQuery<HTMLElement>>
 })

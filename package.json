@@ -8,7 +8,8 @@
     "prettier": "exec prettier . --write",
     "prisma:generate": "pnpm --filter backend prisma:generate",
     "prisma:migrate:apply": "pnpm --filter backend prisma:migrate:apply",
-    "start": "concurrently \"pnpm --filter backend start\" \"pnpm --filter frontend start\""
+    "start": "concurrently \"pnpm --filter backend start\" \"pnpm --filter frontend start\"",
+    "build": "concurrently \"pnpm --filter backend build\" \"pnpm --filter frontend build\""
   },
   "keywords": [],
   "author": "Valentin <valgaillard46@gmail.com>",
