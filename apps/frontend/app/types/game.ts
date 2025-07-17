@@ -3,7 +3,7 @@ export interface GameState {
   currentRow: number
   currentCol: number
   gameStatus: 'playing' | 'won' | 'lost' | 'loading'
-  targetWord: string
+  length: number
   guesses: string[]
   keyboardStatus: { [key: string]: LetterStatus }
   isAnimating: boolean
@@ -19,7 +19,7 @@ export interface CellState {
 }
 
 export interface GameResponse {
-  targetWord: string
+  length: number
   gameId: string
 }
 
@@ -38,7 +38,7 @@ export interface KeyboardProps {
 export interface GameModalProps {
   isOpen: boolean
   gameStatus: 'won' | 'lost'
-  targetWord: string
+  length: number
   onRestart: () => void
   onClose: () => void
 }

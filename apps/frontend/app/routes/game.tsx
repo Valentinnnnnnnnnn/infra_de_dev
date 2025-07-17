@@ -61,7 +61,7 @@ export default function GameRoute() {
         <GameModal
           isOpen={showModal}
           gameStatus={gameState.gameStatus as 'won' | 'lost'}
-          targetWord={gameState.targetWord}
+          length={gameState.length}
           onRestart={resetGame}
           onClose={() => {}}
         />

@@ -3,10 +3,14 @@ import gameRoutes from './routes/gameRoutes'
 import { errorHandler } from './middlewares/errorHandler'
 import logger from './utils/logger'
 import guessRoutes from './routes/guessRoutes'
+import cors from 'cors'
+import helmet from 'helmet'
 
 const app = express()
 
 app.use(express.json())
+app.use(helmet())
+app.use(cors())
 
 // logger
 app.use((req, res, next) => {

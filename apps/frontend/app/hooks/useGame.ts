@@ -5,17 +5,16 @@ import {
   createEmptyBoard,
   isValidWord,
   updateKeyboardStatus,
-  WORD_LENGTH,
   MAX_GUESSES,
 } from '../utils/gameHelpers'
 
 export const useGame = () => {
   const [gameState, setGameState] = useState<GameState>({
-    board: createEmptyBoard(),
     currentRow: 0,
     currentCol: 0,
     gameStatus: 'loading',
-    targetWord: '',
+    length: 5,
+    board: createEmptyBoard(5),
     guesses: [],
     keyboardStatus: {},
     isAnimating: false,
@@ -31,7 +30,9 @@ export const useGame = () => {
       setGameId(gameData.gameId)
       setGameState((prev) => ({
         ...prev,
-        targetWord: gameData.targetWord,
+        length: gameData.length, // Mise à jour de la longueur
+        board: createEmptyBoard(gameData.length), // Recréation du plateau
+        targetWordLength: gameData.length,
         gameStatus: 'playing',
         error: null,
       }))
@@ -41,7 +42,7 @@ export const useGame = () => {
   const addLetter = useCallback(
     (letter: string) => {
       if (
-        gameState.currentCol >= WORD_LENGTH ||
+        gameState.currentCol >= gameState.length ||
         gameState.gameStatus !== 'playing'
       )
         return
@@ -77,14 +78,14 @@ export const useGame = () => {
 
   const submitCurrentGuess = useCallback(async () => {
     if (
-      gameState.currentCol !== WORD_LENGTH ||
+      gameState.currentCol !== gameState.length ||
       gameState.gameStatus !== 'playing'
     )
       return
 
     const currentGuess = gameState.board[gameState.currentRow].join('')
 
-    if (!isValidWord(currentGuess)) {
+    if (!isValidWord(currentGuess, gameState.length)) {
       setGameState((prev) => ({ ...prev, error: 'Mot invalide' }))
       return
     }
@@ -131,17 +132,17 @@ export const useGame = () => {
   )
 
   const resetGame = useCallback(() => {
-    setGameState({
-      board: createEmptyBoard(),
+    setGameState((prev) => ({
       currentRow: 0,
       currentCol: 0,
       gameStatus: 'loading',
-      targetWord: '',
+      length: prev.length,
+      board: createEmptyBoard(prev.length),
       guesses: [],
       keyboardStatus: {},
       isAnimating: false,
       error: null,
-    })
+    }))
     initializeGame()
   }, [initializeGame])
 

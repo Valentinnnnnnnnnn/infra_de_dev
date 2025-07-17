@@ -21,10 +21,13 @@ class ApiService {
   }
 
   async submitGuess(gameId: string, guess: string): Promise<GuessResponse> {
-    const response = await fetch(`${this.baseUrl}/guess/?gameId=${gameId}&guess=${guess}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-    })
+    const response = await fetch(
+      `${this.baseUrl}/guess/?gameId=${gameId}&guess=${guess}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      }
+    )
 
     if (!response.ok) {
       throw new Error('Erreur lors de la soumission de la proposition')

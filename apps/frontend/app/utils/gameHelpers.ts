@@ -1,6 +1,5 @@
 import type { LetterStatus } from '../types/game'
 
-export const WORD_LENGTH = 5
 export const MAX_GUESSES = 6
 
 export const KEYBOARD_LAYOUT = [
@@ -9,14 +8,14 @@ export const KEYBOARD_LAYOUT = [
   ['ENTER', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', 'BACKSPACE'],
 ]
 
-export const isValidWord = (word: string): boolean => {
-  return word.length === WORD_LENGTH && /^[A-Z]+$/.test(word)
+export const isValidWord = (word: string, length: number): boolean => {
+  return word.length === length && /^[A-Z]+$/.test(word)
 }
 
-export const createEmptyBoard = (): string[][] => {
+export const createEmptyBoard = (length: number): string[][] => {
   return Array(MAX_GUESSES)
     .fill(null)
-    .map(() => Array(WORD_LENGTH).fill(''))
+    .map(() => Array(length).fill(''))
 }
 
 export const updateKeyboardStatus = (
