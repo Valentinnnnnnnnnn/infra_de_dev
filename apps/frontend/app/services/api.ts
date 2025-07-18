@@ -3,7 +3,10 @@ import type { GameResponse, GuessResponse } from '../types/game'
 class ApiService {
   private baseUrl: string
 
-  constructor(baseUrl: string = import.meta.env.VITE_API_URL || 'http://31.97.197.115:3009/api/v1') {
+  constructor(
+    baseUrl: string = import.meta.env.VITE_API_URL ||
+      'http://31.97.197.115:3009/api/v1'
+  ) {
     this.baseUrl = baseUrl
   }
 

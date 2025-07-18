@@ -20,7 +20,7 @@ export const GameModal = ({
     } else {
       setWord(null)
     }
-  }, [gameStatus])
+  }, [isOpen])
 
   if (!isOpen) return null
 

@@ -59,8 +59,8 @@ export async function newGuess(gameId: string, guess: string) {
   }
 
   const totalGuesses = await guessRepo.getAllGuessesByGameId(gameId)
-  
-  if ( totalGuesses.length >= game.maxGuesses) {
+
+  if (totalGuesses.length >= game.maxGuesses) {
     logger.debug(`Max guesses reached for game ID ${gameId}`)
     await updateGameStatus(gameId)
     logger.debug(`Game with ID ${gameId} is now finished due to max guesses`)
