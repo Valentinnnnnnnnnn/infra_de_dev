@@ -14,15 +14,15 @@ export async function chooseRandomTarget() {
     'ananas',
     'raisin',
     'cerise',
-    'pêche',
+    'peche',
     'abricot',
     'melon',
-    'pastèque',
+    'pasteque',
     'framboise',
     'myrtille',
     'cassis',
     'groseille',
-    'clémentine',
+    'clementine',
     'mandarine',
   ] //! To be replaced with database query
   const randomIndex = Math.floor(Math.random() * targets.length)
