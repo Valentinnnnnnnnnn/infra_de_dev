@@ -1,3 +1,56 @@
+# FindTheWord
+
+## Initial setup
+
+### Install dependencies
+
+```bash
+pnpm install
+```
+
+### Environment variables
+
+Create a `.env` file in the frontend and backend directories based on the `.env.example` files.
+
+### Start the application
+
+```bash
+pnpm dev
+```
+
+## Setup the database
+
+```bash
+pnpm prisma:generate
+pnpm prisma:migrate:apply
+```
+
+## Build and run the application
+
+```bash
+pnpm build
+```
+
+```bash
+pnpm start
+```
+
+## Tests
+
+### Run tests
+
+```bash
+pnpm test:frontend
+```
+
+```bash
+pnpm test:backend
+```
+
+```bash
+pnpm test:e2e
+```
+
 ## GIT
 
 ### Commit format

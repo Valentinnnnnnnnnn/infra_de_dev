@@ -11,7 +11,8 @@
     "start": "concurrently \"pnpm --filter backend start\" \"pnpm --filter frontend start\"",
     "build": "concurrently \"pnpm --filter backend build\" \"pnpm --filter frontend build\"",
     "test:frontend": "pnpm --filter frontend test",
-    "test:backend": "pnpm --filter backend test"
+    "test:backend": "pnpm --filter backend test",
+    "test:e2e": "pnpm --filter frontend test:e2e"
   },
   "keywords": [],
   "author": "Valentin <valgaillard46@gmail.com>",
