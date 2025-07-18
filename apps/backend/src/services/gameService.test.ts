@@ -10,15 +10,15 @@ const validTargets = [
   'ananas',
   'raisin',
   'cerise',
-  'pêche',
+  'peche',
   'abricot',
   'melon',
-  'pastèque',
+  'pasteque',
   'framboise',
   'myrtille',
   'cassis',
   'groseille',
-  'clémentine',
+  'clementine',
   'mandarine',
 ]
 

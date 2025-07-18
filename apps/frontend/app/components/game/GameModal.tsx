@@ -1,6 +1,6 @@
 import type { GameModalProps } from '../../types/game'
 import { Button } from '../ui/Button'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef, useLayoutEffect } from 'react'
 
 export const GameModal = ({
   isOpen,
@@ -8,27 +8,13 @@ export const GameModal = ({
   onRestart,
   resolvedWord,
 }: GameModalProps) => {
-  const [word, setWord] = useState<string | null>(null)
-
-  useEffect(() => {
-    if (gameStatus !== 'won') {
-      const fetchWord = async () => {
-        const resolved = await resolvedWord()
-        setWord(resolved || '')
-      }
-      fetchWord()
-    } else {
-      setWord(null)
-    }
-  }, [isOpen])
-
   if (!isOpen) return null
 
   const isWon = gameStatus === 'won'
   const title = isWon ? 'Félicitations !' : 'Dommage !'
   const message = isWon
     ? 'Vous avez trouvé le mot !'
-    : `Le mot était : ${word || '...'}`
+    : `Le mot était : ${resolvedWord ?? '...'}`
 
   return (
     <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">

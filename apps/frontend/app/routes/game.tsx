@@ -6,6 +6,7 @@ import { Keyboard } from '../components/game/Keyboard'
 import { GameModal } from '../components/game/GameModal'
 import { LoadingSpinner } from '../components/common/LoadingSpinner'
 import { Button } from '../components/ui/Button'
+import { useState, useEffect } from 'react'
 export const loader: LoaderFunction = async () => {
   return { message: 'Jeu chargé' }
 }
@@ -13,6 +14,15 @@ export const loader: LoaderFunction = async () => {
 export default function GameRoute() {
   const { gameState, handleKeyPress, resetGame, loading, getResolved } =
     useGame()
+  const [word, setWord] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (gameState.gameStatus === 'lost') {
+      getResolved()
+        .then((res) => setWord(res || ''))
+        .catch(() => setWord(''))
+    }
+  }, [gameState.gameStatus])
 
   useKeyboard(
     handleKeyPress,
@@ -62,7 +72,7 @@ export default function GameRoute() {
           isOpen={showModal}
           gameStatus={gameState.gameStatus as 'won' | 'lost'}
           onRestart={resetGame}
-          resolvedWord={getResolved}
+          resolvedWord={word}
         />
       </div>
     </div>
