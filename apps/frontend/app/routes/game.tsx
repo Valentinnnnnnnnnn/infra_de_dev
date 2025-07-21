@@ -50,13 +50,11 @@ export default function GameRoute() {
             </Button>
           </div>
         </header>
-
         {gameState.error && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
             {gameState.error}
           </div>
         )}
-
         <main className="bg-white rounded-lg shadow-lg p-6">
           <Board gameState={gameState} />
           <Keyboard
@@ -68,6 +66,14 @@ export default function GameRoute() {
           />
         </main>
 
+        <div className="mt-8 text-sm text-gray-500 text-center">
+          <p>Attention, le son peut être fort !</p>
+          <p>Utilisez les touches du clavier physique ou virtuel pour jouer.</p>
+          <p>
+            Appuyez sur <strong>Entrée</strong> pour valider votre mot,{' '}
+            <strong>Retour arrière</strong> pour supprimer la dernière lettre.
+          </p>
+        </div>
         <GameModal
           isOpen={showModal}
           gameStatus={gameState.gameStatus as 'won' | 'lost'}

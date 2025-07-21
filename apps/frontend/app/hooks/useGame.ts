@@ -40,6 +40,7 @@ export const useGame = () => {
         length: gameData.length, // Mise à jour de la longueur
         board: createEmptyBoard(gameData.length), // Recréation du plateau
         targetWordLength: gameData.length,
+        guessResults: Array(MAX_GUESSES).fill(Array(gameData.length).fill('unused')),
         gameStatus: 'playing',
         error: null,
       }))
@@ -149,11 +150,7 @@ export const useGame = () => {
     }
 
     // révélation et sons lettre par lettre
-    await revealResultSequentially(
-      result.result,
-      gameState.currentRow,
-      300 // ajustez le délai si besoin
-    )
+    await revealResultSequentially(result.result, gameState.currentRow, 300)
 
     // mise à jour de l’état global après révélation
     setGameState((prev) => {

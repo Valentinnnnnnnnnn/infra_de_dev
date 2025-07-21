@@ -5,7 +5,7 @@ import type { LetterStatus } from '../../types/game'
 interface RowProps {
   row: string[]
   isCurrentRow: boolean
-  guessResult?: LetterStatus[]
+  guessResult: LetterStatus[]
   isAnimating?: boolean
 }
 

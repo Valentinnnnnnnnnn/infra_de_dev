@@ -1,6 +1,7 @@
 import { useCallback } from 'react'
 import type { LetterStatus } from '../types/game'
 import { useStatusSounds } from './useStatusSounds'
+import { flushSync } from 'react-dom'
 
 export const useSequentialReveal = (
   setGameState: React.Dispatch<React.SetStateAction<any>>
@@ -11,12 +12,15 @@ export const useSequentialReveal = (
     async (result: LetterStatus[], row: number, delay: number = 300) => {
       for (let col = 0; col < result.length; col++) {
         const status = result[col]
-        const tileKey = `${row}-${col}`
 
-        setGameState((prev: any) => ({
-          ...prev,
-          tileStates: { ...prev.tileStates, [tileKey]: status },
-        }))
+        flushSync(() => {
+          setGameState((prev: any) => {
+            const newGuessResults = prev.guessResults.map((r:any, i:any) =>
+              i === row ? r.map((s:number, j:number) => (j === col ? status : s)) : r
+            )
+            return { ...prev, guessResults: newGuessResults }
+          })
+        })
 
         playStatusSound(status)
 
