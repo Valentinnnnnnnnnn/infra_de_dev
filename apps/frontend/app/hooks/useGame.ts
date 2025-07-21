@@ -7,6 +7,8 @@ import {
   updateKeyboardStatus,
   MAX_GUESSES,
 } from '../utils/gameHelpers'
+import { useSequentialReveal } from './useSequentialReveal'
+import { useStatusSounds } from './useStatusSounds'
 
 export const useGame = () => {
   const [gameState, setGameState] = useState<GameState>({
@@ -21,6 +23,9 @@ export const useGame = () => {
     isAnimating: false,
     error: null,
   })
+
+  const { isLoaded: soundsLoaded } = useStatusSounds()
+  const { revealResultSequentially } = useSequentialReveal(setGameState)
 
   const [gameId, setGameId] = useState<string>('')
   const { startNewGame, submitGuess, loading, error, getResolvedWord } =
@@ -92,7 +97,7 @@ export const useGame = () => {
       return
     }
 
-    setGameState((prev) => ({ ...prev, isAnimating: true }))
+    /*setGameState((prev) => ({ ...prev, isAnimating: true }))
 
     const result = await submitGuess(gameId, currentGuess)
 
@@ -132,7 +137,54 @@ export const useGame = () => {
     } else {
       setGameState((prev) => ({ ...prev, isAnimating: false }))
     }
-  }, [gameState, gameId, submitGuess])
+  }, [gameState, gameId, submitGuess])*/
+
+    // démarrer l’animation
+    setGameState((prev) => ({ ...prev, isAnimating: true }))
+
+    const result = await submitGuess(gameId, currentGuess)
+    if (!result) {
+      setGameState((prev) => ({ ...prev, isAnimating: false }))
+      return
+    }
+
+    // révélation et sons lettre par lettre
+    await revealResultSequentially(
+      result.result,
+      gameState.currentRow,
+      300 // ajustez le délai si besoin
+    )
+
+    // mise à jour de l’état global après révélation
+    setGameState((prev) => {
+      const newKeyboardStatus = updateKeyboardStatus(
+        prev.keyboardStatus,
+        currentGuess,
+        result.result.map((status, index) => ({
+          letter: currentGuess[index],
+          status,
+        }))
+      )
+      const allCorrect = result.result.every((s) => s === 'correct')
+      const gameStatus = allCorrect
+        ? 'won'
+        : prev.currentRow + 1 >= MAX_GUESSES
+          ? 'lost'
+          : 'playing'
+
+      return {
+        ...prev,
+        currentRow: prev.currentRow + 1,
+        currentCol: 0,
+        gameStatus,
+        guesses: [...prev.guesses, currentGuess],
+        guessResults: [...prev.guessResults, result.result],
+        keyboardStatus: newKeyboardStatus,
+        isAnimating: false,
+        error: null,
+      }
+    })
+  }, [gameState, gameId, submitGuess, revealResultSequentially, soundsLoaded])
 
   const handleKeyPress = useCallback(
     (key: string) => {
